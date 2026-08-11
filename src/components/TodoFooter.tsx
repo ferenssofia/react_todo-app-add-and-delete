@@ -10,6 +10,22 @@ interface Props {
   handleClearCompleted: () => void;
 }
 
+const filterOptions = [
+  { status: Status.All, label: 'All', href: '#/', dataCy: 'FilterLinkAll' },
+  {
+    status: Status.Active,
+    label: 'Active',
+    href: '#/active',
+    dataCy: 'FilterLinkActive',
+  },
+  {
+    status: Status.Completed,
+    label: 'Completed',
+    href: '#/completed',
+    dataCy: 'FilterLinkCompleted',
+  },
+];
+
 export const TodoFooter: React.FC<Props> = ({
   activeTodosCount,
   completedTodosCount,
@@ -24,38 +40,19 @@ export const TodoFooter: React.FC<Props> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={classNames('filter__link', {
-            selected: filter === Status.All,
-          })}
-          data-cy="FilterLinkAll"
-          onClick={() => setFilter(Status.All)}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={classNames('filter__link', {
-            selected: filter === Status.Active,
-          })}
-          data-cy="FilterLinkActive"
-          onClick={() => setFilter(Status.Active)}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={classNames('filter__link', {
-            selected: filter === Status.Completed,
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={() => setFilter(Status.Completed)}
-        >
-          Completed
-        </a>
+        {filterOptions.map(({ status, label, href, dataCy }) => (
+          <a
+            key={status}
+            href={href}
+            className={classNames('filter__link', {
+              selected: filter === status,
+            })}
+            data-cy={dataCy}
+            onClick={() => setFilter(status)}
+          >
+            {label}
+          </a>
+        ))}
       </nav>
 
       <button
