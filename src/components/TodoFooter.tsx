@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Status } from './types/Status';
+import { Status } from '../types/Status';
 
 interface Props {
   activeTodosCount: number;

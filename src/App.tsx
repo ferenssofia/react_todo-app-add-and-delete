@@ -2,10 +2,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { UserWarning } from './UserWarning';
-import { TodoHeader } from './TodoHeader';
-import { TodoList } from './TodoList';
-import { TodoFooter } from './TodoFooter';
+import { UserWarning } from './components/UserWarning';
+import { TodoHeader } from './components/TodoHeader';
+import { TodoList } from './components/TodoList';
+import { TodoFooter } from './components/TodoFooter';
 import { USER_ID, getTodos, createTodo, deleteTodo } from './api/todos';
 import { Todo } from './types/Todo';
 import { Status } from './types/Status';
@@ -129,6 +129,14 @@ export const App: React.FC = () => {
       });
   };
 
+  const handleToggle = (todoId: number) => {
+    setTodos(currentTodos =>
+      currentTodos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
+  };
+
   const handleClearCompleted = () => {
     setErrorMessage(ErrorMessage.None);
     const completedIds = completedTodos.map(todo => todo.id);
@@ -180,6 +188,7 @@ export const App: React.FC = () => {
               tempTodo={tempTodo}
               loadingTodoIds={loadingTodoIds}
               handleDelete={handleDelete}
+              handleToggle={handleToggle}
             />
 
             <TodoFooter

@@ -2,13 +2,14 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import classNames from 'classnames';
-import { Todo } from './types/Todo';
+import { Todo } from '../types/Todo';
 
 interface Props {
   visibleTodos: Todo[];
   tempTodo: Todo | null;
   loadingTodoIds: number[];
   handleDelete: (todoId: number) => void;
+  handleToggle: (todoId: number) => void;
 }
 
 export const TodoList: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const TodoList: React.FC<Props> = ({
   tempTodo,
   loadingTodoIds,
   handleDelete,
+  handleToggle,
 }) => {
   return (
     <section className="todoapp__main" data-cy="TodoList">
@@ -36,7 +38,7 @@ export const TodoList: React.FC<Props> = ({
                 type="checkbox"
                 className="todo__status"
                 checked={todo.completed}
-                readOnly
+                onChange={() => handleToggle(todo.id)}
               />
             </label>
 
